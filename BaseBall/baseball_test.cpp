@@ -1,6 +1,16 @@
 #include "gmock/gmock.h"
 #include "baseball.cpp"
 
+using namespace testing;
+
+class BaseballFixture:  public Test {
+public:
+	Baseball game;
+	void assertIllegalArgument(string guessNumber) {
+		//game.guess()
+	}
+};
+
 TEST(BaseballGame, ThrowExceptionWhenInputLengthIsUnmatched) {
 	Baseball game;
 	EXPECT_THROW(game.guess(string("12")), length_error);
