@@ -14,14 +14,8 @@ public:
 
 	GuessResult guess(const string& guessNumber) {
 		assertIllegalArgument(guessNumber);
-		int strikes = 0, balls = 0;
-		for (int i = 0; i < 3; i++) {
-			if (guessNumber[i] == question[i]) {
-				strikes++;
-			} else if (question.find(guessNumber[i]) != string::npos) {
-				balls++;
-			}
-		}
+		int strikes = countStrikes(guessNumber);
+		int balls = countBalls(guessNumber);
 		return { strikes == 3, strikes, balls };
 	}
 	void assertIllegalArgument(const std::string& guessNumber)
@@ -38,6 +32,21 @@ public:
 		if (isDuplicatedNumber(guessNumber)) {
 			throw invalid_argument("Must not have the same number");
 		}
+	}
+	int countStrikes(const string& guessNumber) {
+		int count = 0;
+		for (size_t i = 0; i < question.size(); i++) {
+			if (guessNumber[i] == question[i]) count++;
+		}
+		return count;
+	}
+	int countBalls(const string& guessNumber) {
+		int count = 0;
+		for (size_t i = 0; i < question.size(); i++) {
+			if (guessNumber[i] != question[i] && question.find(guessNumber[i]) != string::npos)
+				count++;
+		}
+		return count;
 	}
 	bool isDuplicatedNumber(const std::string& guessNumber)
 	{
